@@ -10,36 +10,34 @@ import VideoDeclaracionJurada from "@/components/features/video-declaracion";
 
 export default function DenunciaPage() {
   return (
-    <div className="space-y-6 max-w-3xl">
-      <div className="flex items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-[#1E3A5F]">Nueva Denuncia</h1>
-          <p className="text-slate-500 mt-1">Iniciá un nuevo proceso judicial</p>
-        </div>
+    <div className="space-y-4 lg:space-y-6 max-w-3xl">
+      <div>
+        <h1 className="text-2xl lg:text-3xl font-bold text-[#1E3A5F]">Nueva Denuncia</h1>
+        <p className="text-sm lg:text-base text-slate-500 mt-0.5 lg:mt-1">
+          Iniciá un nuevo proceso judicial
+        </p>
       </div>
 
-      {/* Banner informativo */}
-      <div className="p-4 rounded-xl bg-gradient-to-r from-[#F0F7FE] to-white border border-[#5BA3E6]/20 flex items-start gap-3">
-        <Info className="w-5 h-5 text-[#5BA3E6] mt-0.5 shrink-0" />
-        <div className="text-sm text-slate-600">
+      {/* Banner */}
+      <div className="flex flex-col sm:flex-row items-start gap-3 p-3 lg:p-4 rounded-xl bg-gradient-to-r from-[#F0F7FE] to-white border border-[#5BA3E6]/20">
+        <Info className="w-4 h-4 lg:w-5 lg:h-5 text-[#5BA3E6] mt-0.5 shrink-0" />
+        <div className="text-xs lg:text-sm text-slate-600">
           <strong className="text-[#1E3A5F]">Nuevo:</strong> Ahora podés grabar una{" "}
-          <strong>Declaración Jurada en Video</strong> como parte de tu denuncia. 
+          <strong>Declaración Jurada en Video</strong> como parte de tu denuncia.
           Tu testimonio queda registrado y es enviado a las autoridades.
         </div>
       </div>
 
-      {/* Video Declaración Jurada */}
       <VideoDeclaracionJurada />
 
       <Card>
-        <CardHeader>
-          <CardTitle>Información del Caso</CardTitle>
-          <CardDescription>Completá los datos de tu denuncia</CardDescription>
+        <CardHeader className="p-4 lg:p-6">
+          <CardTitle className="text-base lg:text-lg text-[#1E3A5F]">Información del Caso</CardTitle>
+          <CardDescription className="text-xs lg:text-sm">Completá los datos de tu denuncia</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Tipo de denuncia */}
+        <CardContent className="space-y-4 lg:space-y-6 px-4 lg:px-6 pb-4 lg:pb-6">
           <div className="space-y-2">
-            <Label>Tipo de Denuncia</Label>
+            <Label className="text-sm">Tipo de Denuncia</Label>
             <Select>
               <SelectTrigger>
                 <SelectValue placeholder="Seleccioná el tipo" />
@@ -54,52 +52,46 @@ export default function DenunciaPage() {
             </Select>
           </div>
 
-          {/* Título */}
           <div className="space-y-2">
-            <Label>Título del Caso</Label>
+            <Label className="text-sm">Título del Caso</Label>
             <Input placeholder="Breve descripción del caso" />
           </div>
 
-          {/* Descripción */}
           <div className="space-y-2">
-            <Label>Descripción Detallada</Label>
-            <Textarea 
-              placeholder="Describí lo que sucedió..." 
-              className="min-h-[150px]"
+            <Label className="text-sm">Descripción Detallada</Label>
+            <Textarea
+              placeholder="Describí lo que sucedió..."
+              className="min-h-[120px] lg:min-h-[150px]"
             />
           </div>
 
-          {/* Fecha del incidente */}
           <div className="space-y-2">
-            <Label>Fecha del Incidente</Label>
+            <Label className="text-sm">Fecha del Incidente</Label>
             <Input type="date" />
           </div>
 
-          {/* Modo Incógnito */}
-          <div className="flex items-center justify-between p-4 rounded-lg bg-[#F0F7FE] border border-[#5BA3E6]/20">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 lg:p-4 rounded-lg bg-[#F0F7FE] border border-[#5BA3E6]/20">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-[#5BA3E6]/10">
-                <Lock className="w-5 h-5 text-[#5BA3E6]" />
+              <div className="p-1.5 lg:p-2 rounded-lg bg-[#5BA3E6]/10 shrink-0">
+                <Lock className="w-4 h-4 lg:w-5 lg:h-5 text-[#5BA3E6]" />
               </div>
               <div>
-                <div className="font-medium text-[#1E3A5F]">Modo Incógnito</div>
-                <div className="text-sm text-slate-500">Tu identidad no será expuesta públicamente</div>
+                <div className="font-medium text-sm text-[#1E3A5F]">Modo Incógnito</div>
+                <div className="text-xs lg:text-sm text-slate-500">Tu identidad no será expuesta públicamente</div>
               </div>
             </div>
             <Switch />
           </div>
 
-          {/* Archivos adjuntos */}
           <div className="space-y-2">
-            <Label>Adjuntar Evidencia</Label>
-            <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center cursor-pointer hover:border-[#5BA3E6]/40 transition-colors">
-              <FileText className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-              <p className="text-sm text-slate-500">Click para subir archivos</p>
-              <p className="text-xs text-slate-400">PDF, JPG, PNG hasta 10MB</p>
+            <Label className="text-sm">Adjuntar Evidencia</Label>
+            <div className="border-2 border-dashed border-slate-300 rounded-lg p-4 lg:p-6 text-center cursor-pointer hover:border-[#5BA3E6]/40 transition-colors">
+              <FileText className="w-6 h-6 lg:w-8 lg:h-8 text-slate-400 mx-auto mb-2" />
+              <p className="text-xs lg:text-sm text-slate-500">Click para subir archivos</p>
+              <p className="text-[10px] lg:text-xs text-slate-400">PDF, JPG, PNG hasta 10MB</p>
             </div>
           </div>
 
-          {/* Submit */}
           <Button className="w-full bg-[#5BA3E6] hover:bg-[#4A8FCC] text-white">
             <Send className="w-4 h-4 mr-2" />
             Enviar Denuncia

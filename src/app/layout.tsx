@@ -25,8 +25,14 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mi Proceso - Justicia Tucumán",
+  title: "Justuc - Justicia Tucumán",
   description: "Seguimiento de procesos judiciales sin revictimización - Hackathon Norte Potencia",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
