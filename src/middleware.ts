@@ -1,12 +1,11 @@
-import { auth } from "@/lib/auth";
+// Middleware deshabilitado para MVP demo
+// No se necesita protección de rutas en modo demo
 
-export default auth((req) => {
-  if (!req.auth && req.nextUrl.pathname.startsWith("/dashboard")) {
-    const loginUrl = new URL("/login", req.nextUrl.origin);
-    return Response.redirect(loginUrl);
-  }
-});
+export function middleware() {
+  // No hacer nada - permitir todas las rutas
+}
 
+// Configuración del matcher (no se usa actualmente)
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: [],
 };
