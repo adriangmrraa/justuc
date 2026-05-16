@@ -1,9 +1,9 @@
-import Image from "next/image";
 import { signIn } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Play } from "lucide-react";
 import Link from "next/link";
+import ExpandableLogo from "@/components/features/expandable-logo";
 
 export default function LoginPage() {
   return (
@@ -19,14 +19,8 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-6 lg:mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-white/10 mb-3 lg:mb-4 overflow-hidden">
-            <Image
-              src="/logojustuc.jpg"
-              alt="Justuc Logo"
-              width={80}
-              height={80}
-              className="object-cover w-full h-full"
-            />
+          <div className="inline-flex items-center justify-center mb-3 lg:mb-4">
+            <ExpandableLogo src="/logojustuc.jpg" alt="Justuc Logo" size={72} />
           </div>
           <h1 className="text-2xl lg:text-3xl font-bold text-white tracking-tight">Justuc</h1>
           <p className="text-blue-200/70 mt-1 lg:mt-2 text-xs lg:text-sm">Justicia Tucumán</p>
@@ -34,13 +28,11 @@ export default function LoginPage() {
 
         <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardHeader className="text-center pb-2 p-4 lg:p-6">
-            <div className="w-8 h-8 lg:w-12 lg:h-12 rounded-full bg-[#5BA3E6]/20 flex items-center justify-center mx-auto mb-2 lg:mb-3">
-              <Image
+            <div className="w-8 h-8 lg:w-12 lg:h-12 rounded-full bg-[#5BA3E6]/20 flex items-center justify-center mx-auto mb-2 lg:mb-3 overflow-hidden">
+              <img
                 src="/logojustuc.jpg"
                 alt=""
-                width={36}
-                height={36}
-                className="rounded-full w-6 h-6 lg:w-9 lg:h-9"
+                className="object-cover w-full h-full"
               />
             </div>
             <CardTitle className="text-lg lg:text-2xl font-bold text-white">Bienvenido de nuevo</CardTitle>

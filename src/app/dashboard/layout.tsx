@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import ExpandableLogo from "@/components/features/expandable-logo";
 import {
   LayoutDashboard,
   Calendar,
@@ -57,15 +57,7 @@ export default function DashboardLayout({
         {/* Logo */}
         <div className="p-5 border-b border-[#1A3F62] flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3" onClick={closeSidebar}>
-            <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center overflow-hidden shrink-0">
-              <Image
-                src="/logojustuc.jpg"
-                alt="Justuc Logo"
-                width={36}
-                height={36}
-                className="object-contain"
-              />
-            </div>
+            <ExpandableLogo src="/logojustuc.jpg" alt="Justuc Logo" size={36} />
             <div>
               <h1 className="text-lg font-bold text-white tracking-tight leading-tight">
                 Justuc
