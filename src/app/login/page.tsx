@@ -1,15 +1,16 @@
+import Image from "next/image";
 import { signIn } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Shield, Scale, ArrowLeft, Play } from "lucide-react";
+import { ArrowLeft, Play } from "lucide-react";
 import Link from "next/link";
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-950 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#0A2647] p-4">
       {/* Back Button */}
       <div className="absolute top-6 left-6">
-        <Link href="/" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
+        <Link href="/" className="flex items-center gap-2 text-blue-200/70 hover:text-white transition-colors">
           <ArrowLeft className="w-4 h-4" />
           Volver al inicio
         </Link>
@@ -18,33 +19,47 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-red-600 mb-4">
-            <Shield className="w-10 h-10 text-white" />
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/10 mb-4 overflow-hidden">
+            <Image
+              src="/logojustuc.jpg"
+              alt="Justuc Logo"
+              width={80}
+              height={80}
+              className="object-cover w-full h-full"
+            />
           </div>
-          <h1 className="text-3xl font-bold text-white">Mi Proceso</h1>
-          <p className="text-slate-400 mt-2">Justicia Tucumán</p>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Justuc</h1>
+          <p className="text-blue-200/70 mt-2 text-sm">Justicia Tucumán</p>
         </div>
 
-        <Card className="bg-slate-900/80 border-slate-800">
+        <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardHeader className="text-center pb-2">
-            <Scale className="w-8 h-8 text-red-500 mx-auto mb-3" />
+            <div className="w-12 h-12 rounded-full bg-[#5BA3E6]/20 flex items-center justify-center mx-auto mb-3">
+              <Image
+                src="/logojustuc.jpg"
+                alt=""
+                width={36}
+                height={36}
+                className="rounded-full"
+              />
+            </div>
             <CardTitle className="text-2xl font-bold text-white">Bienvenido de nuevo</CardTitle>
-            <CardDescription className="text-slate-400">
+            <CardDescription className="text-blue-200/60">
               Iniciá sesión para acceder a tu panel de seguimiento
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6 pt-4">
             {/* DEMO Button */}
-            <div className="p-4 rounded-lg bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-500/30">
-              <p className="text-sm text-slate-300 text-center mb-4">
-                <span className="text-blue-400 font-medium">¿Querés probar el MVP?</span><br />
+            <div className="p-4 rounded-lg bg-[#5BA3E6]/10 border border-[#5BA3E6]/30">
+              <p className="text-sm text-blue-200/80 text-center mb-4">
+                <span className="text-[#5BA3E6] font-medium">¿Querés probar el MVP?</span><br />
                 Accedé sin necesidad de cuenta de Google
               </p>
               <form action={async () => {
                 "use server";
                 await signIn("credentials", { redirectTo: "/dashboard" });
               }}>
-                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 font-semibold py-5 text-lg">
+                <Button type="submit" className="w-full bg-[#5BA3E6] hover:bg-[#4A8FCC] text-white font-semibold py-5 text-lg">
                   <Play className="w-5 h-5 mr-2" />
                   Modo Demo
                 </Button>
@@ -54,10 +69,10 @@ export default function LoginPage() {
             {/* Divider */}
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-700" />
+                <div className="w-full border-t border-white/10" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-slate-900 px-2 text-slate-500">o</span>
+                <span className="bg-transparent px-2 text-blue-200/40">o</span>
               </div>
             </div>
 
@@ -66,7 +81,7 @@ export default function LoginPage() {
               "use server";
               await signIn("google", { redirectTo: "/dashboard" });
             }}>
-              <Button type="submit" className="w-full bg-white text-slate-900 hover:bg-slate-200 font-semibold py-6 text-lg">
+              <Button type="submit" className="w-full bg-white text-[#1E3A5F] hover:bg-blue-50 font-semibold py-6 text-lg">
                 <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                   <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
@@ -78,15 +93,15 @@ export default function LoginPage() {
             </form>
 
             {/* Info */}
-            <div className="text-center text-xs text-slate-500 space-y-2">
+            <div className="text-center text-xs text-blue-200/40 space-y-2">
               <p>Al continuar, aceptás nuestros términos de uso</p>
               <p>Tu información está segura y nunca será compartida</p>
             </div>
           </CardContent>
         </Card>
 
-        <p className="text-center text-slate-500 text-sm mt-6">
-          🔒 Seguridad garantizada • 🚀 Hackathon Norte Potencia 2026
+        <p className="text-center text-blue-200/40 text-sm mt-6">
+          Hackathon Norte Potencia 2026
         </p>
       </div>
     </div>

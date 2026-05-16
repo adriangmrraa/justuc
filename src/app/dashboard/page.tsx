@@ -40,7 +40,7 @@ export default function DashboardPage() {
           </p>
         </div>
         <Link href="/denuncia">
-          <Button className="bg-red-600 hover:bg-red-700">
+          <Button className="bg-[#5BA3E6] hover:bg-[#4A8FCC] text-white">
             <Plus className="w-4 h-4 mr-2" />
             Nueva Denuncia
           </Button>
@@ -79,7 +79,7 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent className="space-y-3">
           {cases.map((c) => (
-            <div key={c.id} className="flex items-center justify-between p-4 border rounded-lg hover:border-red-300 hover:bg-red-50/30 transition-all group cursor-pointer">
+            <div key={c.id} className="flex items-center justify-between p-4 border rounded-lg hover:border-[#5BA3E6]/40 hover:bg-[#F0F7FE] transition-all group cursor-pointer">
               <div className="flex-1">
                 <div className="font-medium text-slate-900">{c.title}</div>
                 <div className="text-sm text-slate-500">Caso #{c.id} • {c.lastUpdate}</div>
@@ -95,10 +95,10 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Link href="/denuncia">
-          <div className="p-6 rounded-xl bg-gradient-to-br from-red-600 to-red-700 text-white cursor-pointer shadow-lg hover:scale-[1.02] transition-transform">
+          <div className="p-6 rounded-xl bg-gradient-to-br from-[#5BA3E6] to-[#3B82F6] text-white cursor-pointer shadow-lg hover:scale-[1.02] transition-transform">
             <FileText className="w-8 h-8 mb-3" />
             <h3 className="font-semibold text-lg mb-1">Nueva Denuncia</h3>
-            <p className="text-red-100 text-sm">Iniciá un nuevo proceso judicial</p>
+            <p className="text-blue-100 text-sm">Iniciá un nuevo proceso judicial</p>
           </div>
         </Link>
         <Link href="/calendar">
