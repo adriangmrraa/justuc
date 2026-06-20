@@ -89,10 +89,10 @@ export default function DashboardPage() {
             Aquí está el estado de tus procesos judiciales
           </p>
         </div>
-        <Link href="/dashboard/denuncia" className="w-full sm:w-auto">
+        <Link href="/dashboard/asesor-ia" className="w-full sm:w-auto">
           <Button className="w-full sm:w-auto bg-[#5BA3E6] hover:bg-[#4A8FCC] text-white">
             <Plus className="w-4 h-4 mr-2" />
-            Nueva Denuncia
+            Asesor IA
           </Button>
         </Link>
       </div>
@@ -154,11 +154,11 @@ export default function DashboardPage() {
 
       {/* Quick actions */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 lg:gap-4">
-        <Link href="/dashboard/denuncia">
+        <Link href="/dashboard/asesor-ia">
           <div className="p-4 lg:p-6 rounded-xl bg-gradient-to-br from-[#5BA3E6] to-[#3B82F6] text-white shadow-lg hover:scale-[1.02] transition-transform">
             <FileText className="w-6 h-6 lg:w-8 lg:h-8 mb-2 lg:mb-3" />
-            <h3 className="font-semibold text-sm lg:text-lg mb-0.5 lg:mb-1">Nueva Denuncia</h3>
-            <p className="text-blue-100 text-xs lg:text-sm">Iniciá un nuevo proceso judicial</p>
+            <h3 className="font-semibold text-sm lg:text-lg mb-0.5 lg:mb-1">Asesor IA</h3>
+            <p className="text-blue-100 text-xs lg:text-sm">Consultá sobre tus causas judiciales</p>
           </div>
         </Link>
         <Link href="/dashboard/settings">

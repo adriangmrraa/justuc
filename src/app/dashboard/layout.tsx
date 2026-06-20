@@ -12,6 +12,7 @@ import {
   Bell,
   Menu,
   X,
+  Bot,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -20,7 +21,7 @@ const navItems = [
   { href: "/dashboard", icon: LayoutDashboard, label: "Overview" },
   { href: "/dashboard/timeline", icon: Calendar, label: "Mi Timeline" },
   { href: "/dashboard/expediente", icon: FileText, label: "Expediente" },
-  { href: "/dashboard/denuncia", icon: FileText, label: "Nueva Denuncia" },
+  { href: "/dashboard/asesor-ia", icon: Bot, label: "Asesor IA" },
   { href: "/dashboard/feedback", icon: MessageSquare, label: "El Buen Trato" },
   { href: "/dashboard/settings", icon: Settings, label: "Configuración" },
 ];
