@@ -1,9 +1,8 @@
 import OpenAI from 'openai';
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 export async function POST(req: Request) {
   try {
+    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const { messages, caseData } = await req.json();
 
     const systemPrompt = `Eres un asistente especializado en el sistema judicial de la provincia de Tucumán, Argentina. 
