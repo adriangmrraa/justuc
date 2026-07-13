@@ -5,26 +5,13 @@ import dynamic from "next/dynamic";
 import StickyHeader from "@/components/features/sticky-header";
 import Timeline from "@/components/features/timeline";
 import Notificaciones from "@/components/features/notificaciones";
-import VideoDeclaracion from "@/components/features/video-declaracion";
+import AsesorIA from "@/components/features/asesor-ia";
 import Onboarding, { clearOnboardingFlag } from "@/components/features/onboarding";
 
 const ThreeBackground = dynamic(
   () => import("@/components/features/three-background"),
   { ssr: false }
 );
-
-function VideoSection() {
-  return (
-    <section className="py-8 lg:py-12">
-      <div className="max-w-3xl mx-auto px-4 lg:px-6">
-        <h2 className="text-lg lg:text-2xl font-bold text-[#1E3A5F] mb-6 lg:mb-8 flex items-center gap-2">
-          🎥 Tu declaración en video
-        </h2>
-        <VideoDeclaracion />
-      </div>
-    </section>
-  );
-}
 
 function Footer() {
   return (
@@ -71,8 +58,8 @@ export default function DashboardPage() {
         {/* Notifications Section */}
         <Notificaciones />
 
-        {/* Video Declaration Section */}
-        <VideoSection />
+        {/* AI Assistant Section */}
+        <AsesorIA />
 
         {/* Footer */}
         <Footer />

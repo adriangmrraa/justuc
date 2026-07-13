@@ -24,7 +24,7 @@ async function main() {
     waitUntil: "networkidle",
   });
 
-  // Let animations fully render
+  // Let initial render complete
   await page.waitForTimeout(500);
 
   const totalSlides = await page.evaluate(() => {
@@ -35,49 +35,64 @@ async function main() {
   const pdfDoc = await PDFDocument.create();
 
   for (let i = 0; i < totalSlides; i++) {
-    // Navigate to slide i
-    await page.evaluate((n) => {
-      // Directly activate slide without going through goTo (which uses GSAP)
+    // Activate slide i and hide chrome
+    const actualHeight = await page.evaluate((n) => {
       const slides = document.querySelectorAll(".slide-container");
       slides.forEach((s, idx) => {
         s.classList.toggle("active", idx === n);
         s.style.opacity = idx === n ? "1" : "0";
         s.style.pointerEvents = idx === n ? "all" : "none";
+        s.style.overflow = "visible";
       });
-      // Trigger animations
+
+      // Reveal animated elements
       const anims = slides[n].querySelectorAll(".animate-in");
       anims.forEach((a) => {
         a.style.opacity = "1";
         a.style.transform = "none";
       });
+
+      // Hide navigation UI
+      const nav = document.querySelector(".nav");
+      if (nav) nav.style.display = "none";
+      const dots = document.querySelector(".dots-nav");
+      if (dots) dots.style.display = "none";
+
+      // Return the actual content height of this slide
+      return slides[n].scrollHeight;
     }, i);
 
-    await page.waitForTimeout(400);
+    await page.waitForTimeout(300);
 
-    // Capture the full viewport as PNG (slide fills the viewport)
-    const screenshot = await page.screenshot({
-      type: "png",
-    });
+    // Set viewport to match the slide content exactly (no clipping, no extra space)
+    const vpHeight = Math.max(actualHeight, 720);
+    await page.setViewportSize({ width: 1280, height: vpHeight });
 
-    // Embed the screenshot into an A4 PDF page, preserving 16:9 aspect ratio
+    // Let layout settle
+    await page.waitForTimeout(100);
+
+    // Capture full viewport
+    const screenshot = await page.screenshot({ type: "png" });
+
+    // Create a PDF page matching the screenshot's aspect ratio
+    // Cap width at 800pt, scale height proportionally
     const pngImage = await pdfDoc.embedPng(screenshot);
-    const pageWidth = 595.28; // A4 width in points
-    const pageHeight = 841.89; // A4 height in points
+    const imgW = pngImage.width;
+    const imgH = pngImage.height;
+    const maxPageW = 800;
+    const scale = imgW > maxPageW ? maxPageW / imgW : 1;
+    const pageW = imgW * scale;
+    const pageH = imgH * scale;
 
-    // 16:9 image inside A4 → width is limiting, center vertically
-    const imgWidth = pageWidth;
-    const imgHeight = (imgWidth * 720) / 1280; // maintain 16:9
-    const yOffset = (pageHeight - imgHeight) / 2;
-
-    const newPage = pdfDoc.addPage([pageWidth, pageHeight]);
+    const newPage = pdfDoc.addPage([pageW, pageH]);
     newPage.drawImage(pngImage, {
       x: 0,
-      y: yOffset,
-      width: imgWidth,
-      height: imgHeight,
+      y: 0,
+      width: pageW,
+      height: pageH,
     });
 
-    console.log(`  Slide ${i + 1}/${totalSlides} captured`);
+    console.log(`  Slide ${i + 1}/${totalSlides} — ${imgW}x${imgH}px → ${pageW.toFixed(0)}x${pageH.toFixed(0)}pt`);
   }
 
   const pdfBytes = await pdfDoc.save();
@@ -86,7 +101,8 @@ async function main() {
   await browser.close();
 
   const stats = fs.statSync(outputPdf);
-  console.log("PDF generated:", outputPdf, `(${(stats.size / 1024).toFixed(0)} KB, ${totalSlides} pages)`);
+  const pageCount = pdfDoc.getPageCount();
+  console.log("PDF generated:", outputPdf, `(${(stats.size / 1024).toFixed(0)} KB, ${pageCount} pages)`);
 }
 
 main().catch((err) => {
