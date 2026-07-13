@@ -150,7 +150,7 @@ export default function LoginPage() {
   // ===== SUCCESS VIEW =====
   if (mode === "success") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0A2647] p-4 relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center bg-[#0A2647] p-4 relative overflow-y-auto">
         <Suspense fallback={null}><ThreeBackground /></Suspense>
         <div className="w-full max-w-md text-center relative z-10 animate-in fade-in zoom-in">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-500/20 mb-6">
@@ -169,12 +169,12 @@ export default function LoginPage() {
   // ===== LOGIN VIEW =====
   if (mode === "login") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0A2647] p-4 relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center bg-[#0A2647] p-4 relative overflow-y-auto">
         <Suspense fallback={null}><ThreeBackground /></Suspense>
 
         {/* Back Button */}
         <div className="absolute top-4 lg:top-6 left-4 lg:left-6 z-20">
-          <Link href="/" className="flex items-center gap-2 text-blue-200/70 hover:text-white transition-colors text-xs lg:text-sm">
+          <Link href="/" className="flex items-center gap-2 text-blue-200/70 hover:text-white transition-colors text-xs lg:text-sm py-2">
             <ArrowLeft className="w-3 h-3 lg:w-4 lg:h-4" />
             Volver al inicio
           </Link>
@@ -202,7 +202,7 @@ export default function LoginPage() {
               {errors.general && (
                 <div className="flex gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-300 text-xs lg:text-sm">
                   <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                  <p>{errors.general}</p>
+                  <p className="break-words">{errors.general}</p>
                 </div>
               )}
 
@@ -219,14 +219,14 @@ export default function LoginPage() {
                     placeholder="Ej: 30123456"
                     value={dni}
                     onChange={(e) => handleDniChange(e.target.value)}
-                    className={`w-full px-3 py-2.5 lg:py-3 rounded-lg bg-white/10 border text-white text-sm lg:text-base placeholder:text-blue-200/30 focus:outline-none focus:ring-2 focus:ring-[#5BA3E6]/50 transition-colors ${
+                    className={`w-full px-3 py-3 rounded-lg bg-white/10 border text-white text-sm lg:text-base placeholder:text-blue-200/30 focus:outline-none focus:ring-2 focus:ring-[#5BA3E6]/50 transition-colors ${
                       errors.dni ? "border-red-400/50" : "border-white/20"
                     }`}
                     autoComplete="username"
                     autoFocus
                   />
                   {errors.dni && (
-                    <p className="text-red-300 text-xs mt-1">{errors.dni}</p>
+                    <p className="text-red-300 text-xs mt-1 break-words">{errors.dni}</p>
                   )}
                 </div>
 
@@ -242,7 +242,7 @@ export default function LoginPage() {
                       placeholder="Tu contraseña o código de causa"
                       value={password}
                       onChange={(e) => handlePasswordChange(e.target.value)}
-                      className={`w-full px-3 py-2.5 lg:py-3 pr-10 rounded-lg bg-white/10 border text-white text-sm lg:text-base placeholder:text-blue-200/30 focus:outline-none focus:ring-2 focus:ring-[#5BA3E6]/50 transition-colors ${
+                      className={`w-full px-3 py-3 pr-12 rounded-lg bg-white/10 border text-white text-sm lg:text-base placeholder:text-blue-200/30 focus:outline-none focus:ring-2 focus:ring-[#5BA3E6]/50 transition-colors ${
                         errors.password ? "border-red-400/50" : "border-white/20"
                       }`}
                       autoComplete="current-password"
@@ -250,15 +250,14 @@ export default function LoginPage() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-200/50 hover:text-blue-200/80 transition-colors"
-                      tabIndex={-1}
+                      className="absolute right-1 top-1/2 -translate-y-1/2 p-2 text-blue-200/50 hover:text-blue-200/80 transition-colors rounded-lg hover:bg-white/5"
                       aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
                   {errors.password && (
-                    <p className="text-red-300 text-xs mt-1">{errors.password}</p>
+                    <p className="text-red-300 text-xs mt-1 break-words">{errors.password}</p>
                   )}
                 </div>
 
@@ -331,7 +330,7 @@ export default function LoginPage() {
 
   // ===== FIRST TIME VIEW =====
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0A2647] p-4 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-[#0A2647] p-4 relative overflow-y-auto">
       <Suspense fallback={null}><ThreeBackground /></Suspense>
 
       {/* Back Button */}
@@ -372,7 +371,7 @@ export default function LoginPage() {
             {errors.general && (
               <div className="flex gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-300 text-xs lg:text-sm">
                 <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                <p>{errors.general}</p>
+                <p className="break-words">{errors.general}</p>
               </div>
             )}
 
@@ -389,13 +388,13 @@ export default function LoginPage() {
                   placeholder="Ej: 30123456"
                   value={dni}
                   onChange={(e) => handleDniChange(e.target.value)}
-                  className={`w-full px-3 py-2.5 lg:py-3 rounded-lg bg-white/10 border text-white text-sm lg:text-base placeholder:text-blue-200/30 focus:outline-none focus:ring-2 focus:ring-[#5BA3E6]/50 transition-colors ${
+                  className={`w-full px-3 py-3 rounded-lg bg-white/10 border text-white text-sm lg:text-base placeholder:text-blue-200/30 focus:outline-none focus:ring-2 focus:ring-[#5BA3E6]/50 transition-colors ${
                     errors.dni ? "border-red-400/50" : "border-white/20"
                   }`}
                   autoFocus
                 />
                 {errors.dni && (
-                  <p className="text-red-300 text-xs mt-1">{errors.dni}</p>
+                  <p className="text-red-300 text-xs mt-1 break-words">{errors.dni}</p>
                 )}
               </div>
 
@@ -410,13 +409,13 @@ export default function LoginPage() {
                   placeholder="Ej: MPF-TUC-2026-00421"
                   value={caseCode}
                   onChange={(e) => handleCaseCodeChange(e.target.value)}
-                  className={`w-full px-3 py-2.5 lg:py-3 rounded-lg bg-white/10 border text-white text-sm lg:text-base placeholder:text-blue-200/30 focus:outline-none focus:ring-2 focus:ring-[#5BA3E6]/50 transition-colors ${
+                  className={`w-full px-3 py-3 rounded-lg bg-white/10 border text-white text-sm lg:text-base placeholder:text-blue-200/30 focus:outline-none focus:ring-2 focus:ring-[#5BA3E6]/50 transition-colors ${
                     errors.caseCode ? "border-red-400/50" : "border-white/20"
                   }`}
                   autoComplete="off"
                 />
                 {errors.caseCode && (
-                  <p className="text-red-300 text-xs mt-1">{errors.caseCode}</p>
+                  <p className="text-red-300 text-xs mt-1 break-words">{errors.caseCode}</p>
                 )}
                 <p className="text-blue-200/40 text-[10px] mt-1">
                   Está en la constancia impresa que te dieron al hacer la denuncia
