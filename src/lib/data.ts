@@ -214,6 +214,14 @@ export function validatePassword(user: User, password: string): boolean {
   return user.password === password;
 }
 
+export function setUserPassword(dni: string, newPassword: string): boolean {
+  const user = mockUsers.find((u) => u.dni === dni);
+  if (!user) return false;
+  user.password = newPassword;
+  user.mustChangePassword = false;
+  return true;
+}
+
 export const caseInfo: CaseInfo = {
   caseNumber: "MPF-TUC-2026-00421",
   victimName: "María Elena",
