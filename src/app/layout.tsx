@@ -25,8 +25,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Justuc - Justicia Tucumán",
-  description: "Seguimiento de procesos judiciales sin revictimización - Hackathon Norte Potencia",
+  title: "Mi Proceso — Justicia Tucumán",
+  description: "Seguí tu causa judicial sin llamar, sin ir al tribunal y sin revivir el trauma - Hackathon Norte Potencia",
 };
 
 export const viewport = {
