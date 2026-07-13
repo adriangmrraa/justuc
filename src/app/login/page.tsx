@@ -303,14 +303,12 @@ export default function LoginPage() {
                 </button>
               </div>
 
-              {/* Demo link */}
-              <div className="p-3 rounded-lg bg-[#5BA3E6]/10 border border-[#5BA3E6]/30">
-                <p className="text-xs lg:text-sm text-blue-200/80 text-center">
-                  <span className="text-[#5BA3E6] font-medium">¿Solo querés probar?</span>
-                  <br />
-                  <Link href="/dashboard" className="underline underline-offset-2 hover:text-white transition-colors">
-                    Entrá al modo demo
-                  </Link>
+              {/* Demo credentials */}
+              <div className="p-3 rounded-lg bg-emerald-500/8 border border-emerald-500/25">
+                <p className="text-[10px] lg:text-xs text-emerald-300/70 text-center leading-relaxed">
+                  <span className="text-emerald-300 font-semibold">Demo — probá el simulador</span><br />
+                  DNI: <span className="text-white/90 font-mono">30123456</span>
+                  &nbsp;·&nbsp; Contraseña: <span className="text-white/90 font-mono">MPF-TUC-2026-00421</span>
                 </p>
               </div>
 
