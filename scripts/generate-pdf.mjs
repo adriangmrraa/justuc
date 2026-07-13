@@ -1,5 +1,5 @@
 import { chromium } from "@playwright/test";
-
+import { PDFDocument } from "pdf-lib";
 import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
@@ -15,38 +15,81 @@ async function main() {
     process.exit(1);
   }
 
-  let html = fs.readFileSync(htmlFile, "utf-8");
-
-  // Inject CSS to stack all slides vertically for PDF
-  const printCss = `
-<style>
-  .slide-container { position: relative !important; opacity: 1 !important; transform: none !important; height: auto !important; min-height: 100vh !important; page-break-after: always; }
-  .slide-container .animate-in { opacity: 1 !important; transform: none !important; }
-  .orb, .particle-canvas, .scanline-overlay, .slide-counter, .nav-bar, .dots-nav { display: none !important; }
-</style>`;
-  html = html.replace("</head>", printCss + "</head>");
-
-  const tmpFile = htmlFile + ".print.tmp.html";
-  fs.writeFileSync(tmpFile, html, "utf-8");
-
-  const browser = await chromium.launch({ headless: true, channel: undefined });
-  const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
-
-  await page.goto("file:///" + tmpFile.replace(/\\/g, "/"), { waitUntil: "networkidle" });
-  await page.waitForTimeout(1500);
-
-  await page.pdf({
-    path: outputPdf,
-    format: "A4",
-    printBackground: true,
-    margin: { top: "20px", right: "20px", bottom: "20px", left: "20px" },
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage({
+    viewport: { width: 1280, height: 720 },
   });
 
+  await page.goto("file:///" + htmlFile.replace(/\\/g, "/"), {
+    waitUntil: "networkidle",
+  });
+
+  // Let animations fully render
+  await page.waitForTimeout(500);
+
+  const totalSlides = await page.evaluate(() => {
+    return document.querySelectorAll(".slide-container").length;
+  });
+  console.log(`Found ${totalSlides} slides`);
+
+  const pdfDoc = await PDFDocument.create();
+
+  for (let i = 0; i < totalSlides; i++) {
+    // Navigate to slide i
+    await page.evaluate((n) => {
+      // Directly activate slide without going through goTo (which uses GSAP)
+      const slides = document.querySelectorAll(".slide-container");
+      slides.forEach((s, idx) => {
+        s.classList.toggle("active", idx === n);
+        s.style.opacity = idx === n ? "1" : "0";
+        s.style.pointerEvents = idx === n ? "all" : "none";
+      });
+      // Trigger animations
+      const anims = slides[n].querySelectorAll(".animate-in");
+      anims.forEach((a) => {
+        a.style.opacity = "1";
+        a.style.transform = "none";
+      });
+    }, i);
+
+    await page.waitForTimeout(400);
+
+    // Capture the full viewport as PNG (slide fills the viewport)
+    const screenshot = await page.screenshot({
+      type: "png",
+    });
+
+    // Embed the screenshot into an A4 PDF page, preserving 16:9 aspect ratio
+    const pngImage = await pdfDoc.embedPng(screenshot);
+    const pageWidth = 595.28; // A4 width in points
+    const pageHeight = 841.89; // A4 height in points
+
+    // 16:9 image inside A4 → width is limiting, center vertically
+    const imgWidth = pageWidth;
+    const imgHeight = (imgWidth * 720) / 1280; // maintain 16:9
+    const yOffset = (pageHeight - imgHeight) / 2;
+
+    const newPage = pdfDoc.addPage([pageWidth, pageHeight]);
+    newPage.drawImage(pngImage, {
+      x: 0,
+      y: yOffset,
+      width: imgWidth,
+      height: imgHeight,
+    });
+
+    console.log(`  Slide ${i + 1}/${totalSlides} captured`);
+  }
+
+  const pdfBytes = await pdfDoc.save();
+  fs.writeFileSync(outputPdf, pdfBytes);
+
   await browser.close();
-  fs.unlinkSync(tmpFile);
 
   const stats = fs.statSync(outputPdf);
-  console.log("PDF generated:", outputPdf, `(${(stats.size / 1024).toFixed(0)} KB)`);
+  console.log("PDF generated:", outputPdf, `(${(stats.size / 1024).toFixed(0)} KB, ${totalSlides} pages)`);
 }
 
-main().catch(err => { console.error("Failed:", err); process.exit(1); });
+main().catch((err) => {
+  console.error("Failed:", err);
+  process.exit(1);
+});
