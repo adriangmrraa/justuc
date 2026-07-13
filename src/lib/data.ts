@@ -188,6 +188,32 @@ export const videoHistory: VideoRecord[] = [
   },
 ];
 
+export interface User {
+  dni: string;
+  name: string;
+  caseNumber: string;
+  password: string; // provisional = caseNumber, changed after first login
+  mustChangePassword: boolean;
+}
+
+export const mockUsers: User[] = [
+  {
+    dni: "30123456",
+    name: "María Elena",
+    caseNumber: "MPF-TUC-2026-00421",
+    password: "MPF-TUC-2026-00421", // provisional = case number
+    mustChangePassword: true,
+  },
+];
+
+export function findUserByDni(dni: string): User | undefined {
+  return mockUsers.find((u) => u.dni === dni);
+}
+
+export function validatePassword(user: User, password: string): boolean {
+  return user.password === password;
+}
+
 export const caseInfo: CaseInfo = {
   caseNumber: "MPF-TUC-2026-00421",
   victimName: "María Elena",

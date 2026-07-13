@@ -224,6 +224,49 @@ src/
 
 ---
 
+---
+
+## 🔐 Identidad y Acceso — Cómo se vincula la víctima con su causa
+
+### El problema
+
+> ¿Cómo sabemos que la persona que ingresa al portal es realmente la víctima? ¿Cómo se genera la contraseña? ¿Cómo se vinculan los datos de la causa a la cuenta?
+
+### La solución: cuenta nacida de la denuncia
+
+No existe auto-registro. La cuenta se crea **en el momento de hacer la denuncia**, integrada con el flujo natural del SAE.
+
+### Paso a paso
+
+```
+1. DENUNCIA                    2. SISTEMA GENERA              3. ENTREGA EN MANO          4. PRIMER INGRESO
+┌──────────────────┐          ┌─────────────────────┐        ┌──────────────────┐        ┌────────────────────┐
+│ Víctima denuncia  │          │ SAE asigna DNI como  │        │ Se imprime        │        │ Ingresa con        │
+│ en Fiscalía. SAE  │ ──────→ │ damnificado + genera │ ────→ │ constancia con    │ ────→ │ DNI + contraseña   │
+│ registra su DNI.  │          │ contraseña provisoria│        │ DNI, causa y      │        │ provisoria.        │
+│                    │          │ = n° de causa        │        │ contraseña        │        │ OBLIGA a cambiarla.│
+└──────────────────┘          └─────────────────────┘        └──────────────────┘        └────────────────────┘
+```
+
+### Principios de seguridad
+
+| Principio | Explicación |
+|-----------|-------------|
+| **Sin auto-registro** | La cuenta se crea desde el sistema judicial, no desde un formulario público. Si no tenés una causa activa asociada a tu DNI, no podés acceder. |
+| **Entrega en persona** | La contraseña provisoria se entrega impresa en el momento de la denuncia. La persona está físicamente en la Fiscalía — no hay robo de identidad posible. |
+| **DNI como nexo** | El DNI es la clave que vincula a la persona con su causa en el SAE. El portal consulta: `SELECT * FROM causas WHERE dni_victima = ?`. No se crean bases de datos paralelas. |
+| **Contraseña provisoria** | Generada automáticamente usando el número de causa. Se cambia obligatoriamente en el primer ingreso. |
+| **Sin registro adicional** | No se piden datos que el SAE no tenga ya. No hay formularios de registro, no hay validación de email, no hay confirmación SMS. |
+
+### Flujo de login en el MVP
+
+- Login con DNI + contraseña (validación contra datos mockeados)
+- Si el DNI no existe: mensaje "No encontramos una causa asociada a este DNI. Si hiciste una denuncia, la contraseña provisoria está en el acta que te dieron en la Fiscalía."
+- Opción de "Primera vez" que simula la activación con código de causa
+- En producción: el sistema se conecta al SAE vía API y valida contra los datos reales
+
+---
+
 ## 🔄 Flujo del Usuario
 
 ```

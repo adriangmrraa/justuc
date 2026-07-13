@@ -418,7 +418,7 @@
 
 <!-- ===== PROGRESS BAR ===== -->
 <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-<div class="slide-counter" id="slide-counter">01 / 08</div>
+<div class="slide-counter" id="slide-counter">01 / 09</div>
 
 <!-- ===== DOTS NAV ===== -->
 <div class="dots-nav" id="dots-nav"></div>
@@ -702,14 +702,113 @@
 </div>
 
 <!-- ============================================================ -->
-<!-- SLIDE 5: OBJETIVO -->
+<!-- SLIDE 5: IDENTIDAD Y ACCESO -->
 <!-- ============================================================ -->
-<div class="slide-container bg-gradient" id="slide-5">
+<div class="slide-container bg-dark" id="slide-5">
+  <div class="orb orb-2"></div>
+  <div class="slide-content">
+    <div class="animate-in">
+      <div class="eyebrow">05 — Identidad y Acceso</div>
+      <h2 class="slide-title text-white" style="margin-bottom:8px;">
+        ¿Cómo sabe el sistema que la víctima es quien dice ser?
+      </h2>
+      <p class="slide-subtitle text-white-60" style="margin-bottom:32px;">
+        Una cuenta que nace en la denuncia, no en un formulario de registro
+      </p>
+    </div>
+
+    <!-- Timeline de creación de cuenta -->
+    <div class="animate-in" style="display:flex;flex-direction:column;gap:0;margin-bottom:32px;max-width:900px;margin-left:auto;margin-right:auto;">
+      <div style="display:flex;gap:20px;padding-left:20px;border-left:2px solid rgba(91,163,230,0.3);position:relative;padding-bottom:24px;">
+        <div style="position:absolute;left:-10px;top:0;width:18px;height:18px;border-radius:50%;background:var(--primary);border:3px solid var(--dark);"></div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <span style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;color:var(--primary);">Paso 1</span>
+            <span class="badge badge-success" style="font-size:10px;">En la denuncia</span>
+          </div>
+          <p class="body-small text-white-80">
+            La víctima hace la denuncia en Fiscalía. El SAE registra su <strong>DNI</strong> como damnificado y lo asocia automáticamente a la causa. El DNI es el nexo entre la persona y su expediente.
+          </p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:20px;padding-left:20px;border-left:2px solid rgba(91,163,230,0.3);position:relative;padding-bottom:24px;">
+        <div style="position:absolute;left:-10px;top:0;width:18px;height:18px;border-radius:50%;background:var(--primary);border:3px solid var(--dark);"></div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <span style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;color:var(--primary);">Paso 2</span>
+            <span class="badge badge-success" style="font-size:10px;">El sistema genera</span>
+          </div>
+          <p class="body-small text-white-80">
+            El sistema SAE genera automáticamente una <strong>contraseña provisoria</strong> usando el número de causa (ej: <code style="background:rgba(91,163,230,0.12);padding:2px 8px;border-radius:4px;font-size:13px;">MPF-TUC-2026-00421</code>). No hay registro voluntario. La cuenta nace del proceso judicial.
+          </p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:20px;padding-left:20px;border-left:2px solid rgba(91,163,230,0.3);position:relative;padding-bottom:24px;">
+        <div style="position:absolute;left:-10px;top:0;width:18px;height:18px;border-radius:50%;background:var(--primary);border:3px solid var(--dark);"></div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <span style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;color:var(--primary);">Paso 3</span>
+            <span class="badge badge-success" style="font-size:10px;">Entrega en mano</span>
+          </div>
+          <p class="body-small text-white-80">
+            La Fiscalía imprime una <strong>constancia</strong> con el N° de causa, DNI, contraseña provisoria y un código QR para acceder al portal. Se la entregan <strong>en mano a la víctima</strong> en el momento. No hay riesgo de robo de identidad porque la persona está físicamente ahí.
+          </p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:20px;padding-left:20px;position:relative;">
+        <div style="position:absolute;left:-10px;top:0;width:18px;height:18px;border-radius:50%;background:var(--green);border:3px solid var(--dark);"></div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <span style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;color:var(--green);">Paso 4</span>
+            <span class="badge badge-success" style="font-size:10px;">Primer ingreso</span>
+          </div>
+          <p class="body-small text-white-80">
+            La víctima ingresa al portal con <strong>DNI + contraseña provisoria</strong>. El sistema la obliga a crear una nueva contraseña personal. A partir de ahí, accede con DNI + su contraseña. <strong>No hay auto-registro:</strong> si tu DNI no tiene una causa asociada, no podés crear una cuenta.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security highlight -->
+    <div class="animate-in" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:900px;margin:0 auto;">
+      <div class="card-accent" style="padding:20px;text-align:center;background:rgba(5,150,105,0.08);border-color:rgba(5,150,105,0.2);">
+        <div style="font-size:28px;margin-bottom:8px;">🔐</div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;margin-bottom:4px;color:var(--white);">Sin auto-registro</h3>
+        <p class="body-small" style="opacity:0.8;font-size:13px;">La cuenta se crea desde el sistema judicial, no desde un formulario público</p>
+      </div>
+      <div class="card-accent" style="padding:20px;text-align:center;background:rgba(5,150,105,0.08);border-color:rgba(5,150,105,0.2);">
+        <div style="font-size:28px;margin-bottom:8px;">📄</div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;margin-bottom:4px;color:var(--white);">Entrega en persona</h3>
+        <p class="body-small" style="opacity:0.8;font-size:13px;">La contraseña provisoria se entrega en mano en el momento de la denuncia</p>
+      </div>
+      <div class="card-accent" style="padding:20px;text-align:center;background:rgba(5,150,105,0.08);border-color:rgba(5,150,105,0.2);">
+        <div style="font-size:28px;margin-bottom:8px;">🔗</div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;margin-bottom:4px;color:var(--white);">DNI como nexo</h3>
+        <p class="body-small" style="opacity:0.8;font-size:13px;">El DNI vincula a la persona con su causa. Sin DNI en el SAE, no hay acceso al portal</p>
+      </div>
+    </div>
+
+    <div class="animate-in mt-6" style="background:rgba(91,163,230,0.06);border:1px solid rgba(91,163,230,0.12);border-radius:12px;padding:20px 24px;max-width:900px;margin:32px auto 0;">
+      <p class="body-small text-white-80" style="text-align:center;">
+        <strong style="color:var(--primary);">¿Cómo se vinculan los datos de la causa a la persona?</strong><br>
+        El SAE ya asigna el DNI de la víctima como <code style="background:rgba(91,163,230,0.12);padding:2px 8px;border-radius:4px;">damnificado</code> en cada expediente. El portal consulta: <code style="background:rgba(91,163,230,0.12);padding:2px 8px;border-radius:4px;">SELECT * FROM causas WHERE dni_victima = ?</code>. Sin bases nuevas, sin registros paralelos. La identidad digital de la víctima <strong>es su DNI</strong>, el mismo que ya está en el sistema.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 6: OBJETIVO -->
+<!-- ============================================================ -->
+<div class="slide-container bg-gradient" id="slide-6">
   <div class="orb orb-1"></div>
   <div class="orb orb-3"></div>
   <div class="slide-content text-center">
     <div class="animate-in">
-      <div class="eyebrow">04 — El Objetivo</div>
+      <div class="eyebrow">06 — El Objetivo</div>
       <h2 class="slide-title text-white" style="margin-bottom:24px;">
         ¿Para qué hacemos esto?
       </h2>
@@ -751,13 +850,13 @@
 </div>
 
 <!-- ============================================================ -->
-<!-- SLIDE 6: ENTES / DÓNDE PRESENTAR -->
+<!-- SLIDE 7: ENTES / DÓNDE PRESENTAR -->
 <!-- ============================================================ -->
-<div class="slide-container bg-dark" id="slide-6">
+<div class="slide-container bg-dark" id="slide-7">
   <div class="orb orb-2"></div>
   <div class="slide-content">
     <div class="animate-in">
-      <div class="eyebrow">05 — Estrategia</div>
+      <div class="eyebrow">07 — Estrategia</div>
       <h2 class="slide-title text-white" style="margin-bottom:8px;">
         ¿Con quiénes tenemos que hablar?
       </h2>
@@ -847,13 +946,13 @@
 </div>
 
 <!-- ============================================================ -->
-<!-- SLIDE 7: USUARIOS / BENEFICIARIOS -->
+<!-- SLIDE 8: USUARIOS / BENEFICIARIOS -->
 <!-- ============================================================ -->
-<div class="slide-container bg-dark" id="slide-7">
+<div class="slide-container bg-dark" id="slide-8">
   <div class="orb orb-1"></div>
   <div class="slide-content">
     <div class="animate-in">
-      <div class="eyebrow">06 — Impacto</div>
+      <div class="eyebrow">08 — Impacto</div>
       <h2 class="slide-title text-white" style="margin-bottom:8px;">
         ¿Quiénes se benefician?
       </h2>
@@ -925,9 +1024,9 @@
 </div>
 
 <!-- ============================================================ -->
-<!-- SLIDE 8: CIERRE / CTA -->
+<!-- SLIDE 9: CIERRE / CTA -->
 <!-- ============================================================ -->
-<div class="slide-container bg-gradient" id="slide-8">
+<div class="slide-container bg-gradient" id="slide-9">
   <canvas class="particle-canvas" id="closing-particles"></canvas>
   <div class="orb orb-1"></div>
   <div class="slide-content text-center" style="position:relative;z-index:1;">
@@ -1179,7 +1278,7 @@ window.addEventListener('resize', function() {
 
 // ===== INIT =====
 slideInitializers[0] = function() { initParticleCanvas('cover-particles'); };
-slideInitializers[8] = function() { initParticleCanvas('closing-particles'); };
+slideInitializers[9] = function() { initParticleCanvas('closing-particles'); };
 
 updateUI();
 triggerSlideAnimations(0);
