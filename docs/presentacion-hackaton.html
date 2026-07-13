@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Proceso — Hackathon Norte Potencia 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    :root {
+      --primary: #5BA3E6;
+      --primary-dark: #4A8FCC;
+      --primary-light: #D4E8F7;
+      --primary-bg: #F0F7FE;
+      --dark: #0A2647;
+      --dark-soft: #1E3A5F;
+      --dark-card: #0F2B4A;
+      --white: #FFFFFF;
+      --white-80: rgba(255,255,255,0.8);
+      --white-60: rgba(255,255,255,0.6);
+      --white-40: rgba(255,255,255,0.4);
+      --green: #059669;
+      --green-dim: rgba(5,150,105,0.15);
+      --yellow: #F59E0B;
+      --red: #E11D48;
+      --purple: #7C3AED;
+    }
+
+    /* ===== SLIDE SYSTEM ===== */
+    .slide-container {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      padding: 60px;
+      overflow-y: auto;
+    }
+    .slide-container.active {
+      opacity: 1;
+      pointer-events: all;
+      z-index: 10;
+    }
+
+    .slide-content {
+      width: 100%;
+      max-width: 1200px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== BACKGROUND VARIANTS ===== */
+    .bg-dark { background: var(--dark); }
+    .bg-gradient { background: linear-gradient(135deg, var(--dark) 0%, #031525 100%); }
+    .bg-light { background: var(--primary-bg); }
+    .bg-white-slide { background: #FFFFFF; }
+
+    /* ===== GRADIENT ORBS ===== */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      animation: orbFloat 20s ease-in-out infinite;
+    }
+    .orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(91,163,230,0.12), transparent 70%);
+      top: -10%; right: -5%;
+    }
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(91,163,230,0.08), transparent 70%);
+      bottom: -10%; left: -5%;
+      animation-delay: -7s;
+    }
+    .orb-3 {
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(91,163,230,0.1), transparent 70%);
+      top: 30%; left: 50%;
+      animation-delay: -14s;
+    }
+
+    @keyframes orbFloat {
+      0%,100% { transform: translate(0,0) scale(1); }
+      25% { transform: translate(30px,-40px) scale(1.08); }
+      50% { transform: translate(-20px,20px) scale(0.95); }
+      75% { transform: translate(40px,10px) scale(1.05); }
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    .eyebrow {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+    h1, h2, .heading {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+    .hero-title {
+      font-size: clamp(48px, 7vw, 96px);
+      font-weight: 900;
+      letter-spacing: -2px;
+    }
+    .slide-title {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+    .slide-subtitle {
+      font-size: clamp(18px, 2vw, 28px);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .body-text {
+      font-size: clamp(16px, 1.4vw, 22px);
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    .body-small {
+      font-size: clamp(14px, 1.2vw, 18px);
+      line-height: 1.5;
+    }
+    .text-white { color: var(--white); }
+    .text-white-80 { color: var(--white-80); }
+    .text-white-60 { color: var(--white-60); }
+    .text-white-40 { color: var(--white-40); }
+    .text-primary { color: var(--primary); }
+    .text-dark { color: var(--dark-soft); }
+    .text-slate { color: #64748B; }
+
+    /* ===== LOGO ===== */
+    .logo-circle {
+      width: 100px; height: 100px;
+      border-radius: 24px;
+      background: rgba(91,163,230,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 2px solid rgba(91,163,230,0.2);
+    }
+    .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .logo-circle.small { width: 64px; height: 64px; border-radius: 16px; }
+    .logo-circle.large { width: 140px; height: 140px; border-radius: 32px; }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 28px 32px;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+    }
+    .card-light {
+      background: var(--white);
+      border: 1px solid rgba(91,163,230,0.15);
+      border-radius: 16px;
+      padding: 28px 32px;
+      box-shadow: 0 4px 20px rgba(91,163,230,0.08);
+    }
+    .card-accent {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border-radius: 16px;
+      padding: 28px 32px;
+    }
+    .card-accent-gold {
+      background: linear-gradient(135deg, #F59E0B, #D97706);
+      color: white;
+      border-radius: 16px;
+      padding: 28px 32px;
+    }
+    .card-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    /* ===== GRID ===== */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+    .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; }
+    .flex-center { display: flex; align-items: center; justify-content: center; }
+    .flex-between { display: flex; align-items: center; justify-content: space-between; }
+    .gap-4 { gap: 16px; }
+    .gap-6 { gap: 24px; }
+    .gap-8 { gap: 32px; }
+    .mt-4 { margin-top: 16px; }
+    .mt-6 { margin-top: 24px; }
+    .mt-8 { margin-top: 32px; }
+    .mb-4 { margin-bottom: 16px; }
+    .mb-6 { margin-bottom: 24px; }
+    .mb-8 { margin-bottom: 32px; }
+    .text-center { text-align: center; }
+
+    /* ===== BADGES ===== */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .badge-primary { background: rgba(91,163,230,0.15); color: var(--primary); }
+    .badge-green { background: rgba(5,150,105,0.15); color: var(--green); }
+    .badge-yellow { background: rgba(245,158,11,0.15); color: var(--yellow); }
+    .badge-purple { background: rgba(124,58,237,0.15); color: var(--purple); }
+
+    /* ===== FEATURE LIST ===== */
+    .feature-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .feature-row:last-child { border-bottom: none; }
+    .feature-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    /* ===== COVER PARTICLES ===== */
+    .particle-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: all;
+    }
+
+    /* ===== NAVIGATION ===== */
+    .progress-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: rgba(255,255,255,0.08);
+      z-index: 200;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), #3B82F6);
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    .slide-counter {
+      position: fixed;
+      top: 20px; left: 24px;
+      font-size: 13px;
+      color: var(--white-40);
+      font-family: 'JetBrains Mono', monospace;
+      z-index: 200;
+    }
+
+    .nav {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 16px;
+      z-index: 200;
+    }
+    .nav-btn {
+      background: rgba(255,255,255,0.06);
+      color: var(--white-60);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 10px 22px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover {
+      background: rgba(91,163,230,0.2);
+      color: var(--white);
+      border-color: var(--primary);
+    }
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+    .nav-btn:disabled:hover {
+      background: rgba(255,255,255,0.06);
+      color: var(--white-60);
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    /* ===== DOTS NAV ===== */
+    .dots-nav {
+      position: fixed;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 200;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      padding: 0;
+    }
+    .dot.active {
+      background: var(--primary);
+      box-shadow: 0 0 8px rgba(91,163,230,0.4);
+      width: 10px; height: 10px;
+    }
+    .dot:hover { background: rgba(255,255,255,0.3); }
+
+    /* ===== TIMELINE ===== */
+    .timeline-item {
+      display: flex;
+      gap: 20px;
+      padding: 16px 0;
+      position: relative;
+    }
+    .timeline-dot {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 3px solid var(--primary);
+      background: var(--dark);
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    .timeline-line {
+      position: absolute;
+      left: 9px;
+      top: 36px;
+      bottom: 0;
+      width: 2px;
+      background: rgba(91,163,230,0.2);
+    }
+    .timeline-item:last-child .timeline-line { display: none; }
+
+    /* ===== QUOTE ===== */
+    .quote-mark {
+      font-size: 72px;
+      font-weight: 900;
+      color: var(--primary);
+      opacity: 0.3;
+      line-height: 0.5;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* ===== CARD FLOATING ===== */
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .float { animation: float 4s ease-in-out infinite; }
+    .float-2 { animation: float 5s ease-in-out infinite; animation-delay: -2s; }
+
+    /* ===== STEP REVEAL ===== */
+    .step-hidden { opacity: 0; transform: translateY(20px); }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      .slide-container { padding: 24px 20px; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; gap: 16px; }
+      .logo-circle.large { width: 80px; height: 80px; border-radius: 20px; }
+      .dots-nav { display: none; }
+      .nav-btn { padding: 8px 14px; font-size: 12px; }
+      .card, .card-light, .card-accent { padding: 20px; }
+      .slide-counter { top: 12px; left: 14px; font-size: 11px; }
+    }
+    @media (max-width: 1024px) and (min-width: 769px) {
+      .grid-4 { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ===== SCROLLBAR ===== */
+    .slide-container::-webkit-scrollbar { width: 4px; }
+    .slide-container::-webkit-scrollbar-track { background: transparent; }
+    .slide-container::-webkit-scrollbar-thumb { background: rgba(91,163,230,0.3); border-radius: 2px; }
+
+    /* ===== ANIMATE-IN CLASS ===== */
+    .animate-in { opacity: 0; transform: translateY(24px); }
+  </style>
+</head>
+<body>
+
+<!-- ===== PROGRESS BAR ===== -->
+<div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+<div class="slide-counter" id="slide-counter">01 / 08</div>
+
+<!-- ===== DOTS NAV ===== -->
+<div class="dots-nav" id="dots-nav"></div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 0: COVER -->
+<!-- ============================================================ -->
+<div class="slide-container bg-gradient active" id="slide-0">
+  <canvas class="particle-canvas" id="cover-particles"></canvas>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="slide-content text-center" style="position:relative;z-index:1;">
+    <div class="animate-in" style="margin-bottom:32px;">
+      <div class="logo-circle large" style="margin:0 auto 24px; background:rgba(91,163,230,0.12); border:2px solid rgba(91,163,230,0.3);">
+        <span style="font-size:42px;">📋</span>
+      </div>
+    </div>
+    <div class="animate-in" style="margin-bottom:8px;">
+      <span class="badge badge-primary" style="font-size:14px;padding:8px 20px;">
+        Hackathon Norte Potencia 2026
+      </span>
+    </div>
+    <h1 class="hero-title text-white animate-in" style="margin-bottom:16px;">
+      Mi Proceso
+    </h1>
+    <p class="slide-subtitle text-white-60 animate-in" style="max-width:700px;margin:0 auto 32px;">
+      Una propuesta para que la víctima sepa, desde su celular,<br>
+      en qué estado está su causa judicial
+    </p>
+    <div class="animate-in flex-center gap-4" style="flex-wrap:wrap;">
+      <span class="badge badge-green" style="font-size:13px;">Seguimiento visual</span>
+      <span class="badge badge-primary" style="font-size:13px;">Notificaciones Google</span>
+      <span class="badge badge-yellow" style="font-size:13px;">Dentro del SAE</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 1: PROBLEMA -->
+<!-- ============================================================ -->
+<div class="slide-container bg-dark" id="slide-1">
+  <div class="orb orb-1"></div>
+  <div class="slide-content">
+    <div class="animate-in">
+      <div class="eyebrow">01 — El Problema</div>
+      <h2 class="slide-title text-white" style="margin-bottom:24px;">
+        La justicia está rota<br>
+        <span class="text-primary">para quien más la necesita</span>
+      </h2>
+    </div>
+
+    <div class="grid-2 mt-6">
+      <div class="card animate-in">
+        <div class="card-icon" style="background:rgba(225,29,72,0.15);color:var(--red);">🔍</div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:8px;">
+          Opacidad
+        </h3>
+        <p class="body-small text-white-60">
+          Las víctimas no saben en qué estado está su causa. No hay forma simple de consultar el avance del proceso judicial sin ir personalmente al tribunal.
+        </p>
+      </div>
+
+      <div class="card animate-in">
+        <div class="card-icon" style="background:rgba(225,29,72,0.15);color:var(--red);">🔄</div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:8px;">
+          Revictimización
+        </h3>
+        <p class="body-small text-white-60">
+          La víctima tiene que contar su historia repetidas veces a distintos operadores judiciales. No hay un canal único que centralice su testimonio.
+        </p>
+      </div>
+    </div>
+
+    <div class="animate-in mt-6" style="text-align:center;">
+      <p class="body-text text-white-60" style="font-style:italic;max-width:700px;margin:0 auto;">
+        "El ciudadano común no tiene las herramientas para navegar el sistema judicial. 
+        La información está, pero no llega a quien la necesita."
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 2: CAUSA -->
+<!-- ============================================================ -->
+<div class="slide-container bg-dark" id="slide-2">
+  <div class="orb orb-2"></div>
+  <div class="slide-content">
+    <div class="animate-in">
+      <div class="eyebrow">02 — La Causa Raíz</div>
+      <h2 class="slide-title text-white" style="margin-bottom:32px;">
+        ¿Por qué pasa esto?
+      </h2>
+    </div>
+
+    <div class="grid-2" style="align-items:center;">
+      <div>
+        <div class="animate-in">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-line"></div>
+            <div>
+              <h3 style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--white);">
+                Sistemas fragmentados
+              </h3>
+              <p class="body-small text-white-60">
+                Cada institución judicial tiene su propio sistema. No hay interoperabilidad. 
+                La víctima es un número distinto en cada ventanilla.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="animate-in">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-line"></div>
+            <div>
+              <h3 style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--white);">
+                Brecha digital institucional
+              </h3>
+              <p class="body-small text-white-60">
+                Muchos juzgados aún operan en papel. La digitalización no llegó a todos los niveles del sistema.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="animate-in">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <h3 style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--white);">
+                Falta de canales para la víctima
+              </h3>
+              <p class="body-small text-white-60">
+                No existe una plataforma donde la víctima pueda hacer seguimiento, 
+                cargar documentación o dar su testimonio una sola vez.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-accent animate-in" style="text-align:center;padding:40px 32px;">
+        <div style="font-size:56px;font-weight:900;font-family:'Montserrat',sans-serif;line-height:1;">
+          80%
+        </div>
+        <p class="body-text" style="margin-top:8px;opacity:0.9;">
+          de los ciudadanos no saben<br>
+          <strong>cómo seguir su causa judicial</strong>
+        </p>
+        <div style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.2);">
+          <p class="body-small" style="opacity:0.8;">
+            Fuente: relevamiento propio en Tribunales de Tucumán
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 3: SOLUCIÓN -->
+<!-- ============================================================ -->
+<div class="slide-container bg-gradient" id="slide-3">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-3"></div>
+  <div class="slide-content text-center">
+    <div class="animate-in">
+      <span class="badge badge-primary" style="font-size:14px;padding:8px 20px;margin-bottom:16px;">
+        Nuestra Propuesta
+      </span>
+    </div>
+
+    <div class="animate-in" style="margin-bottom:24px;">
+      <div class="logo-circle large" style="margin:0 auto 24px; background:rgba(91,163,230,0.12); border:2px solid rgba(91,163,230,0.3);">
+        <span style="font-size:42px;">📋</span>
+      </div>
+    </div>
+
+    <h2 class="slide-title text-white animate-in" style="margin-bottom:16px;">
+      <span class="text-primary">/miproceso</span>
+    </h2>
+    <p class="slide-subtitle text-white-80 animate-in" style="max-width:700px;margin:0 auto 32px;">
+      Una nueva sección <strong>dentro del Portal del SAE</strong> que ya existe,<br>
+      para que la víctima pueda seguir su causa sin llamar,<br>
+      sin preguntar y sin revivir el trauma.
+    </p>
+
+    <div class="grid-3 mt-4 animate-in" style="text-align:left;">
+      <div class="card" style="background:rgba(91,163,230,0.08);border-color:rgba(91,163,230,0.15);">
+        <div style="font-size:28px;margin-bottom:8px;">👁️</div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:var(--white);">Transparencia</h3>
+        <p class="body-small text-white-60">Timeline visual del proceso judicial. La víctima ve el estado actual y todos los movimientos de su causa, desde la denuncia hasta la resolución.</p>
+      </div>
+      <div class="card" style="background:rgba(91,163,230,0.08);border-color:rgba(91,163,230,0.15);">
+        <div style="font-size:28px;margin-bottom:8px;">📅</div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:var(--white);">Conexión Google Calendar</h3>
+        <p class="body-small text-white-60">Las audiencias y eventos judiciales se sincronizan automáticamente con el calendario de la víctima. Recibe notificaciones por mail y alerts en el celular.</p>
+      </div>
+      <div class="card" style="background:rgba(91,163,230,0.08);border-color:rgba(91,163,230,0.15);">
+        <div style="font-size:28px;margin-bottom:8px;">🎥</div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:var(--white);">Declaración en Video</h3>
+        <p class="body-small text-white-60">La víctima se filma con la cámara y el micrófono de su celular directamente desde el navegador —sin adjuntar archivos— para dejar su declaración jurada o responder solicitudes de la justicia sin tener que ir al tribunal.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 4: MVP - QUÉ HACE -->
+<!-- ============================================================ -->
+<div class="slide-container bg-dark" id="slide-4">
+  <div class="orb orb-2"></div>
+  <div class="slide-content">
+    <div class="animate-in">
+      <div class="eyebrow">03 — La Propuesta</div>
+      <h2 class="slide-title text-white" style="margin-bottom:8px;">
+        ¿Qué proponemos?
+      </h2>
+      <p class="slide-subtitle text-white-60" style="margin-bottom:32px;">
+        Dos funcionalidades simples que transforman la experiencia de la víctima
+      </p>
+    </div>
+
+    <div class="grid-3">
+      <div class="animate-in">
+        <div class="card-accent" style="padding:32px 28px;">
+          <div style="font-size:36px;margin-bottom:12px;">📅</div>
+          <h3 style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px;">
+            Timeline Visual del Proceso
+          </h3>
+          <p class="body-small" style="opacity:0.9;">
+            La víctima ve en una línea de tiempo clara y ordenada todos los eventos de su causa judicial: denuncia, derivaciones, audiencias, resoluciones. Como seguir un envío de MercadoLibre.
+          </p>
+          <p class="body-small" style="opacity:0.8;margin-top:10px;">
+            <strong>Sin llamar. Sin preguntar. Sin ir al tribunal.</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="animate-in">
+        <div class="card-accent" style="padding:32px 28px;background:linear-gradient(135deg, #1E3A5F, #0A2647);">
+          <div style="font-size:36px;margin-bottom:12px;">🔔</div>
+          <h3 style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px;">
+            Notificaciones + Google Calendar
+          </h3>
+          <p class="body-small" style="opacity:0.9;">
+            Cada vez que hay una audiencia, un cambio de estado o un evento importante, la víctima recibe una notificación automática en su mail y se le agrega al calendario de Google. Así no se pierde ninguna fecha crítica.
+          </p>
+          <p class="body-small" style="opacity:0.8;margin-top:10px;">
+            <strong>Los años que dura un litigio, la víctima siempre sabe qué sigue.</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="animate-in">
+        <div class="card-accent" style="padding:32px 28px;">
+          <div style="font-size:36px;margin-bottom:12px;">🎥</div>
+          <h3 style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px;">
+            Declaración en Video
+          </h3>
+          <p class="body-small" style="opacity:0.9;">
+            La víctima se filma con la cámara y el micrófono de su celular directamente desde <strong style="color:var(--white);">/miproceso</strong>. Sin subir archivos, sin adjuntar nada. Deja su declaración jurada una sola vez, o responde los pedidos de la justicia con un video desde su casa.
+          </p>
+          <p class="body-small" style="opacity:0.8;margin-top:10px;">
+            <strong>La justicia pide. La víctima responde. Sin citación. Sin tribunal.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate-in mt-6" style="background:rgba(91,163,230,0.08);border:1px solid rgba(91,163,230,0.15);border-radius:12px;padding:20px 24px;text-align:center;">
+      <p class="body-small text-white-80">
+        <strong>Tres funcionalidades, un solo objetivo:</strong> que la víctima sepa, participe y no tenga que revivir el trauma. Todo integrado en el portal que ya existe, en la sección <strong style="color:var(--primary);">/miproceso</strong>.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 5: OBJETIVO -->
+<!-- ============================================================ -->
+<div class="slide-container bg-gradient" id="slide-5">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-3"></div>
+  <div class="slide-content text-center">
+    <div class="animate-in">
+      <div class="eyebrow">04 — El Objetivo</div>
+      <h2 class="slide-title text-white" style="margin-bottom:24px;">
+        ¿Para qué hacemos esto?
+      </h2>
+    </div>
+
+    <div class="grid-2 mt-6 animate-in" style="text-align:left;">
+      <div class="card-accent" style="padding:32px 28px;">
+        <div style="font-size:36px;margin-bottom:12px;">🎯</div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px;">
+          Empoderar a la víctima
+        </h3>
+        <p class="body-small" style="opacity:0.85;">
+          Que cualquier ciudadano pueda saber, desde su celular, en qué estado está su causa judicial sin tener que ir al tribunal.
+        </p>
+        <p class="body-small" style="opacity:0.85;margin-top:10px;">
+          UX/UI clara y humana para que la primera interpretación del expediente no requiera asistencia profesional.
+        </p>
+      </div>
+
+      <div class="card-accent" style="padding:32px 28px;">
+        <div style="font-size:36px;margin-bottom:12px;">📉</div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px;">
+          Reducir la revictimización
+        </h3>
+        <p class="body-small" style="opacity:0.85;">
+          La víctima declara una sola vez con su celular, desde su casa. Sin tener que contar su historia repetidas veces en cada institución. Si la justicia necesita más información, le llega un mail y responde con un video grabado en <strong>/miproceso</strong>. Sin citación, sin fila, sin revivir el trauma.
+        </p>
+      </div>
+    </div>
+
+    <div class="animate-in mt-8" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:28px 32px;max-width:800px;margin:32px auto 0;">
+      <p class="body-text text-white-80">
+        <strong>Misión:</strong> Democratizar el acceso a la información judicial. 
+        Que la justicia no sea un privilegio para quienes saben navegar el sistema, 
+        sino un derecho accesible para todos.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 6: ENTES / DÓNDE PRESENTAR -->
+<!-- ============================================================ -->
+<div class="slide-container bg-dark" id="slide-6">
+  <div class="orb orb-2"></div>
+  <div class="slide-content">
+    <div class="animate-in">
+      <div class="eyebrow">05 — Estrategia</div>
+      <h2 class="slide-title text-white" style="margin-bottom:8px;">
+        ¿Con quiénes tenemos que hablar?
+      </h2>
+      <p class="slide-subtitle text-white-60" style="margin-bottom:32px;">
+        Entidades clave para implementar Mi Proceso
+      </p>
+    </div>
+
+    <div class="grid-2">
+      <div class="animate-in" style="grid-column:1;">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:var(--primary);margin-bottom:16px;">
+          🏛️ Entidades del sistema judicial
+        </h3>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card" style="padding:20px 24px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(91,163,230,0.12);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🏛️</div>
+              <div>
+                <div style="font-weight:700;color:var(--white);font-size:16px;">Poder Judicial de Tucumán</div>
+                <div class="body-small text-white-60">Implementación en juzgados y tribunales</div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding:20px 24px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(91,163,230,0.12);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">⚖️</div>
+              <div>
+                <div style="font-weight:700;color:var(--white);font-size:16px;">Ministerio Público Fiscal</div>
+                <div class="body-small text-white-60">Coordinación con fiscales</div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding:20px 24px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(91,163,230,0.12);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">👮</div>
+              <div>
+                <div style="font-weight:700;color:var(--white);font-size:16px;">Policía de Tucumán</div>
+                <div class="body-small text-white-60">Toma de denuncias digitales</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="animate-in" style="grid-column:2;">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:var(--primary);margin-bottom:16px;">
+          🤝 Aliados estratégicos
+        </h3>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card" style="padding:20px 24px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(5,150,105,0.12);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🏗️</div>
+              <div>
+                <div style="font-weight:700;color:var(--white);font-size:16px;">Gobierno de Tucumán</div>
+                <div class="body-small text-white-60">Secretaría de Justicia / Innovación</div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding:20px 24px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(5,150,105,0.12);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🎓</div>
+              <div>
+                <div style="font-weight:700;color:var(--white);font-size:16px;">Universidades</div>
+                <div class="body-small text-white-60">UNC / UNT — Validación académica y datos</div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding:20px 24px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(5,150,105,0.12);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">💻</div>
+              <div>
+                <div style="font-weight:700;color:var(--white);font-size:16px;">Nación / Nación Hackathon</div>
+                <div class="body-small text-white-60">Visibilidad y tracción institucional</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate-in mt-6" style="background:rgba(5,150,105,0.08);border:1px solid rgba(5,150,105,0.2);border-radius:12px;padding:20px 24px;">
+      <p class="body-small text-white-80" style="text-align:center;">
+        <strong>Próximo paso:</strong> Presentar Mi Proceso en el <strong>Ministerio Público Fiscal</strong> y en la <strong>Secretaría de Justicia</strong> de la provincia para iniciar el piloto.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 7: USUARIOS / BENEFICIARIOS -->
+<!-- ============================================================ -->
+<div class="slide-container bg-dark" id="slide-7">
+  <div class="orb orb-1"></div>
+  <div class="slide-content">
+    <div class="animate-in">
+      <div class="eyebrow">06 — Impacto</div>
+      <h2 class="slide-title text-white" style="margin-bottom:8px;">
+        ¿Quiénes se benefician?
+      </h2>
+      <p class="slide-subtitle text-white-60" style="margin-bottom:32px;">
+        Todos los actores del sistema ganan con Mi Proceso
+      </p>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:24px;">
+      <div class="animate-in">
+        <div class="card" style="background:rgba(91,163,230,0.06);border-color:rgba(91,163,230,0.12);height:100%;">
+          <div class="flex-between" style="margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:40px;height:40px;border-radius:12px;background:rgba(91,163,230,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;">👤</div>
+              <h3 style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--white);">Usuarios directos</h3>
+            </div>
+          </div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="color:var(--primary);font-size:18px;">▸</span>
+              <span class="body-small text-white-80"><strong>Víctimas</strong> de delitos — Pueden hacer seguimiento de su causa, recibir notificaciones y grabar su declaración en video desde el celular, sin ir al tribunal.</span>
+            </li>
+            <li style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="color:var(--primary);font-size:18px;">▸</span>
+              <span class="body-small text-white-80"><strong>Familiares</strong> — Acceden al estado del proceso con un código de seguimiento.</span>
+            </li>
+            <li style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="color:var(--primary);font-size:18px;">▸</span>
+              <span class="body-small text-white-80"><strong>Abogados particulares</strong> — Tienen visibilidad centralizada de las causas de sus clientes.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="animate-in">
+        <div class="card" style="background:rgba(5,150,105,0.06);border-color:rgba(5,150,105,0.12);height:100%;">
+          <div class="flex-between" style="margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:40px;height:40px;border-radius:12px;background:rgba(5,150,105,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;">🏛️</div>
+              <h3 style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--white);">Instituciones beneficiadas</h3>
+            </div>
+          </div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="color:var(--green);font-size:18px;">▸</span>
+              <span class="body-small text-white-80"><strong>Poder Judicial</strong> — Reduce consultas presenciales, digitaliza la comunicación con la víctima.</span>
+            </li>
+            <li style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="color:var(--green);font-size:18px;">▸</span>
+              <span class="body-small text-white-80"><strong>Ministerio Público</strong> — Accede a la declaración jurada en video sin revictimizar.</span>
+            </li>
+            <li style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="color:var(--green);font-size:18px;">▸</span>
+              <span class="body-small text-white-80"><strong>Policía</strong> — Digitaliza la toma de denuncias y las deriva electrónicamente.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate-in">
+      <div class="card-accent" style="text-align:center;padding:24px 32px;background:var(--dark);border:1px solid rgba(91,163,230,0.2);">
+        <p class="body-text text-white" style="font-weight:700;">
+          El beneficio final: <span style="color:var(--primary);">menos burocracia, más justicia, menos revictimización.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 8: CIERRE / CTA -->
+<!-- ============================================================ -->
+<div class="slide-container bg-gradient" id="slide-8">
+  <canvas class="particle-canvas" id="closing-particles"></canvas>
+  <div class="orb orb-1"></div>
+  <div class="slide-content text-center" style="position:relative;z-index:1;">
+    <div class="animate-in" style="margin-bottom:24px;">
+      <div class="logo-circle large" style="margin:0 auto 24px; background:rgba(91,163,230,0.12); border:2px solid rgba(91,163,230,0.3);">
+        <span style="font-size:42px;">📋</span>
+      </div>
+    </div>
+
+    <h2 class="slide-title text-white animate-in" style="margin-bottom:16px;">
+      Hagamos que la justicia<br>sea para quien más la necesita
+    </h2>
+    <p class="slide-subtitle text-white-60 animate-in" style="max-width:600px;margin:0 auto 40px;">
+      Mi Proceso es una propuesta concreta para modernizar<br>
+      la relación entre el sistema judicial y la víctima.
+    </p>
+
+    <div class="animate-in" style="display:flex;flex-direction:column;align-items:center;gap:16px;margin-bottom:40px;">
+      <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px 24px;text-align:center;">
+          <div style="font-size:28px;font-weight:900;font-family:'Montserrat',sans-serif;color:var(--primary);">Propuesta</div>
+          <div class="body-small text-white-40">Lista para implementar</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px 24px;text-align:center;">
+          <div style="font-size:28px;font-weight:900;font-family:'Montserrat',sans-serif;color:var(--primary);">Mobile</div>
+          <div class="body-small text-white-40">First</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px 24px;text-align:center;">
+          <div style="font-size:28px;font-weight:900;font-family:'Montserrat',sans-serif;color:var(--primary);">/miproceso</div>
+          <div class="body-small text-white-40">Dentro del SAE</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate-in" style="margin-top:16px;">
+      <p class="body-text text-white-60" style="max-width:600px;margin:0 auto;">
+        Los datos ya existen. La infraestructura ya está.<br>
+        Solo falta la voluntad de ponerla al servicio de la víctima.
+      </p>
+    </div>
+
+    <div class="animate-in mt-8">
+      <p class="body-small text-white-40">
+        <strong>Hackathon Norte Potencia 2026</strong> &mdash; Equipo 6
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NAVIGATION BUTTONS ===== -->
+<div class="nav">
+  <button class="nav-btn" id="prev-btn" disabled>&larr; Anterior</button>
+  <button class="nav-btn" id="next-btn">Siguiente &rarr;</button>
+</div>
+
+<script>
+// ===== REGISTRY =====
+const slideInitializers = {};
+
+// ===== NAVIGATION =====
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide-container');
+const totalSlides = slides.length;
+const progressFill = document.getElementById('progress-fill');
+const slideCounter = document.getElementById('slide-counter');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const dotsNav = document.getElementById('dots-nav');
+
+// Build dots
+for (let i = 0; i < totalSlides; i++) {
+  const dot = document.createElement('button');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.dataset.index = i;
+  dot.addEventListener('click', function() {
+    goTo(parseInt(this.dataset.index));
+  });
+  dotsNav.appendChild(dot);
+}
+const dots = dotsNav.querySelectorAll('.dot');
+
+function goTo(n) {
+  if (n < 0 || n >= totalSlides || n === currentSlide) return;
+
+  const outSlide = slides[currentSlide];
+  const inSlide = slides[n];
+
+  // Crossfade with opacity
+  outSlide.classList.remove('active');
+  outSlide.style.opacity = '';
+  inSlide.classList.add('active');
+
+  // GSAP entrance
+  inSlide.style.opacity = '0';
+  gsap.to(inSlide, { opacity: 1, duration: 0.35, ease: 'power2.out', onComplete: function() {
+    triggerSlideAnimations(n);
+  }});
+
+  currentSlide = n;
+  updateUI();
+  if (slideInitializers[n]) slideInitializers[n]();
+}
+
+function updateUI() {
+  const pct = ((currentSlide + 1) / totalSlides) * 100;
+  progressFill.style.width = pct + '%';
+  slideCounter.textContent =
+    String(currentSlide + 1).padStart(2, '0') + ' / ' +
+    String(totalSlides).padStart(2, '0');
+  prevBtn.disabled = currentSlide === 0;
+  nextBtn.disabled = currentSlide === totalSlides - 1;
+  dots.forEach(function(d, i) {
+    d.classList.toggle('active', i === currentSlide);
+  });
+}
+
+function triggerSlideAnimations(index) {
+  const slide = slides[index];
+  const elements = slide.querySelectorAll('.animate-in');
+  gsap.fromTo(elements,
+    { opacity: 0, y: 30 },
+    { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out', clearProps: 'transform' }
+  );
+}
+
+// Keyboard events
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+    e.preventDefault();
+    goTo(currentSlide + 1);
+  }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    e.preventDefault();
+    goTo(currentSlide - 1);
+  }
+  if (e.key === 'f' || e.key === 'F') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+});
+
+// Button events
+prevBtn.addEventListener('click', function() { goTo(currentSlide - 1); });
+nextBtn.addEventListener('click', function() { goTo(currentSlide + 1); });
+
+// Touch swipe
+let touchStartX = 0;
+let touchEndX = 0;
+document.addEventListener('touchstart', function(e) {
+  touchStartX = e.changedTouches[0].screenX;
+});
+document.addEventListener('touchend', function(e) {
+  touchEndX = e.changedTouches[0].screenX;
+  var diff = touchStartX - touchEndX;
+  if (Math.abs(diff) > 50) {
+    if (diff > 0) goTo(currentSlide + 1);
+    else goTo(currentSlide - 1);
+  }
+});
+
+// ===== PARTICLE CANVAS =====
+function initParticleCanvas(canvasId) {
+  var canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  var mouseX = canvas.width / 2;
+  var mouseY = canvas.height / 2;
+
+  var particles = [];
+  for (var i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      radius: Math.random() * 2 + 1,
+    });
+  }
+
+  canvas.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+  canvas.addEventListener('touchmove', function(e) {
+    mouseX = e.touches[0].clientX;
+    mouseY = e.touches[0].clientY;
+  });
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      var dx = mouseX - p.x;
+      var dy = mouseY - p.y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 200) {
+        p.vx += dx * 0.00005;
+        p.vy += dy * 0.00005;
+      }
+
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(91, 163, 230, 0.5)';
+      ctx.fill();
+    }
+
+    // Connections
+    for (var i = 0; i < particles.length; i++) {
+      for (var j = i + 1; j < particles.length; j++) {
+        var dx = particles[i].x - particles[j].x;
+        var dy = particles[i].y - particles[j].y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = 'rgba(91, 163, 230, ' + (0.15 * (1 - dist / 150)) + ')';
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+}
+
+// ===== RESIZE HANDLER =====
+window.addEventListener('resize', function() {
+  document.querySelectorAll('.particle-canvas').forEach(function(c) {
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+  });
+});
+
+// ===== INIT =====
+slideInitializers[0] = function() { initParticleCanvas('cover-particles'); };
+slideInitializers[8] = function() { initParticleCanvas('closing-particles'); };
+
+updateUI();
+triggerSlideAnimations(0);
+if (slideInitializers[0]) slideInitializers[0]();
+</script>
+</body>
+</html>

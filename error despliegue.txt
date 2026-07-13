@@ -1,0 +1,41 @@
+
+
+2
+
+2
+Find in logs
+CtrlF
+Running build in Washington, D.C., USA (East) – iad1
+Build machine configuration: 2 cores, 8 GB
+Cloning github.com/adriangmrraa/justuc (Branch: main, Commit: 4e822ee)
+Previous build caches not available.
+Cloning completed: 300.000ms
+Running "vercel build"
+Vercel CLI 54.14.0
+Installing dependencies...
+npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+added 787 packages in 24s
+270 packages are looking for funding
+  run `npm fund` for details
+Detected Next.js version: 16.2.6
+Running "npm run build"
+> mi-proceso@0.1.0 build
+> next build
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 9.7s
+  Running TypeScript ...
+  Finished TypeScript in 5.8s ...
+  Collecting page data using 1 worker ...
+Error: Missing credentials. Please pass an `apiKey`, `workloadIdentity`, `adminAPIKey`, or set the `OPENAI_API_KEY` or `OPENAI_ADMIN_KEY` environment variable.
+    at instantiateModule (.next/server/chunks/[turbopack]_runtime.js:853:9)
+    at instantiateRuntimeModule (.next/server/chunks/[turbopack]_runtime.js:882:12)
+    at getOrInstantiateRuntimeModule (.next/server/chunks/[turbopack]_runtime.js:895:12)
+    at Object.m (.next/server/chunks/[turbopack]_runtime.js:898:18)
+    at Object.<anonymous> (.next/server/app/api/chat/route.js:6:3)
+> Build error occurred
+Error: Failed to collect page data for /api/chat
+    at ignore-listed frames {
+  type: 'Error'
+}
+Error: Command "npm run build" exited with 1
